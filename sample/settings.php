@@ -11,6 +11,19 @@
 	define( 'BP_ROOT', ROOT .'..' .DIRECTORY_SEPARATOR );
 	define( 'HOME', 'home.php' );
 	define( 'DEBUG', true );
+
+	$DATABASES = array(
+		'default' => array( 
+			'dsn' => 'mysql:host=localhost;port=3306;dbname=geostore',
+			'user' => 'root',
+			'pass' => 'krishna',
+		),
+		'socket' => array(
+			'dsn' => 'mysql:unix_socket=/tmp/mysql.sock;dbname=geostore',
+			'user' => 'root',
+			'pass' => 'krishna',
+		),
+	);
 	
 ?>
 
