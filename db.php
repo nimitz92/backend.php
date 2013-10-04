@@ -37,6 +37,59 @@
 	class Model {
 		private static $_objects = false;
 		static $_table = 'model';
+		static $_pk = 'id';
+
+		private $_loaded = array();
+		private $_changed = array();
+		private $_extra = array();
+
+
+		function Model( $array = array() ){
+			foreach( $array as $k => $v ){
+				if( property_exists( get_called_class(), $k ) ){
+					$this->$k = $v;
+					$this->_loaded[] = $k;
+				}
+				else
+					$this->_extra[ $k ] = $v;
+			}
+		}
+
+		function set( $name, $value ) {
+			if( $this->$name != $value )
+				$this->$name = $value;
+				$this->_changed[ $name ] = true;
+		}
+
+		function save( $force_insert = false ){
+			$pk = self::$_pk;
+			$pkval = $this->$pk;
+
+			if( !$pkval or $force_insert ){
+				// insert into table
+			}
+			else {
+				$db = self::objects()->filter( array( $pk => $pkval ) );
+				$args = array();
+
+				foreach( $this->_changed as $k => $v )
+					if( in_array( $k, $this->_loaded ) )
+						$args[ $k ] = $this->$k;
+
+				$db->update( $args );
+				return $this;
+			}
+		}
+
+		function delete(){
+			$pk = self::$_pk;
+			$pkval = $this->$pk;
+
+			$db = self::objects()->filter( array( $pk => $pkval ) );
+			$db->delete( $args );
+			
+			return $this;
+		}
 
 		static function objects(){
 			if( !self::$_objects ){
@@ -54,7 +107,7 @@
 	class EXPR {
 		var $_array;
 
-		function EXPR( $array = array() ){
+		function __construct( $array = array() ){
 			$this->_array = $array;
 		}
 
@@ -94,7 +147,7 @@
 		var $_dbkey;
 
 
-		function DB( $model ){
+		function __construct( $model ){
 			$this->_model = $model;
 			$this->_result = false;
 			$this->_count = 0;
@@ -176,7 +229,7 @@
 			if( $this->_select ){
 				$qs = array();
 				foreach( $this->_select as $e ){
-					array_push( $qs, $vars[ $e ] );
+					array_push( $qs, $vars[ $e ].' AS `'. $e.'`' );
 				}
 				array_push( $q, implode( ', ', $qs ), 'FROM', $tables );	
 			}
@@ -225,8 +278,11 @@
 				die( 'Error Executing Query: '. $q. ' Error: '.$error[ 2 ].' (Code '.$error[ 1 ].')' );
 			}
 			
-			$this->_result = $stmt->fetchAll( PDO::FETCH_ASSOC );
-			$this->_count = count( $this->_result );
+			$this->_result = array();
+
+			foreach( $stmt->fetchAll( PDO::FETCH_ASSOC ) as $row )
+				$this->_result[] = new $this->_model( $row );
+				$this->_count++;
 		}
 
 		function _setup_joins( &$vars ){
@@ -255,7 +311,83 @@
 			return implode( ', ', $tables );
 		}
 
+		function update( $set ){
+			$model = $this->_model;
+			$vars = array();
+			$subs = array();
+
+			$q = array( "UPDATE", '`'.$model::$_table.'`', 'SET' );
+
+			foreach( $this->_where->vars() as $e ){
+				$vars[ $e ] = '`'.$e.'`';
+			}
+
+			if( $set ){
+				$qs = array();
+				foreach( $set as $k => $v ){
+					array_push( $qs, '`'.$k.'`=?' );
+					$subs[] = $v;
+				}
+				array_push( $q, implode( ', ', $qs ) );	
+			}
+			
+			if( $this->_where ){
+				$qs = $this->_where->sql( $vars, $subs );
+				if( $qs )
+					array_push( $q, 'WHERE', $qs );	
+			}
+			
+			$q = implode( ' ', $q );
+
+			$conn = db_get_connection( $this->_dbkey );
+			$stmt = $conn->prepare( $q );
+			$res = $stmt->execute( $subs );
+
+			if( $res === false ){
+				$error = $stmt->errorInfo();
+				die( 'Error Executing Query: '. $q. ' Error: '.$error[ 2 ].' (Code '.$error[ 1 ].')' );
+			}
+			
+			return $res;
+		}
+
+		function delete(){
+			$model = $this->_model;
+			$vars = array();
+			$subs = array();
+
+			$q = array( "DELETE FROM", '`'.$model::$_table.'`' );
+
+			foreach( $this->_where->vars() as $e ){
+				$vars[ $e ] = '`'.$e.'`';
+			}
+
+			if( $this->_where ){
+				$qs = $this->_where->sql( $vars, $subs );
+				if( $qs )
+					array_push( $q, 'WHERE', $qs );	
+			}
+			
+			$q = implode( ' ', $q );
+
+			$conn = db_get_connection( $this->_dbkey );
+			$stmt = $conn->prepare( $q );
+			$res = $stmt->execute( $subs );
+
+			if( $res === false ){
+				$error = $stmt->errorInfo();
+				die( 'Error Executing Query: '. $q. ' Error: '.$error[ 2 ].' (Code '.$error[ 1 ].')' );
+			}
+			
+			return $res;
+		}
+
 		function only( $select ){
+			$this->_select = $select;
+			return $this;
+		}
+
+		function values( $select ){
 			$this->_select = $select;
 			return $this;
 		}
