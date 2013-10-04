@@ -1,0 +1,4 @@
+RewriteEngine on
+
+# forward everything to index.php
+RewriteRule ^(.*)$ index.php [L]
