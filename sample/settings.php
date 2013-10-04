@@ -9,7 +9,7 @@
 	define( 'APP', '/iospace/blackpearl/sample/' );
 
 	define( 'BP_ROOT', ROOT .'..' .DIRECTORY_SEPARATOR );
-	define( 'HOME', 'default.php' );
+	define( 'HOME', 'home.php' );
 	define( 'DEBUG', true );
 	
 ?>
