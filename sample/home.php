@@ -1,4 +1,10 @@
 <?php
+/**
+ *	Sample Project Test Page
+ *
+ *	Vibhaj Rajan <vibhaj8@gmail.com>
+ *
+**/
 
 	require_once( BP_ROOT. 'db.php' );
 
@@ -14,13 +20,21 @@
 	$qs = DBTest::objects()->filter( array( 'email' => 'vibhaj.itbhu@gmail.com' ) )->only( array( 'id', 'username', 'email' ) )->order_by( array( 'username' ) )->using( 'default' );
 
 	foreach( $qs as $row )
-		var_dump( $row );
+		print_r( $row );
 	echo '<br /><br />';
 
 	$row->set( 'email', 'tr4n2uil@gmail.com' );
-	var_dump( $row );
+	print_r( $row );
+	echo '<br /><br />';
 	//$row->save();
 	//$row->delete();
+
+	$dbt = DBTest::objects()->get( array( 'email' => 'vibhajitbhu@gmail.com' ) );
+	print_r( $dbt );
+	echo '<br /><br />';
+
+	//$dbt = DBTest::objects()->create( array( 'email' => 'vibhajitbhu@gmail.com', 'username' => 'vbj' ) );
+	//print_r( $dbt );
 
 	echo 'Hello World! from BlackPearl Sample Project<br /><br />';
 

@@ -1,5 +1,11 @@
 blackpearl
-PHP Smart Web Framework
+	PHP Smart Web Framework
 
 Vibhaj Rajan <vibhaj8@gmail.com>
-IOspace Open Source
+	2013 IOspace Open Source
+
+
+REQUIREMENTS
+	-mod_rewrite enabled
+	-htaccess enabled
+	-pdo enabled

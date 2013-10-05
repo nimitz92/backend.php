@@ -1,5 +1,11 @@
 <?php
-	
+/**
+ *	Sample Project Settings
+ *
+ *	Vibhaj Rajan <vibhaj8@gmail.com>
+ *
+**/
+
 	define( 'ROOT', dirname( __FILE__ ) .DIRECTORY_SEPARATOR );
 
 	/**
@@ -10,7 +16,7 @@
 
 	define( 'BP_ROOT', ROOT .'..' .DIRECTORY_SEPARATOR );
 	define( 'HOME', 'home.php' );
-	define( 'DEBUG', true );
+	define( 'DEBUG', false );
 
 	$DATABASES = array(
 		'default' => array( 
