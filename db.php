@@ -66,10 +66,12 @@
 		public static $_table = 'model';
 		public static $_pk = 'id';
 
+		// public variables
+		public $_extra = array();
+
 		// private variables
 		private $_loaded = array();
 		private $_changed = array();
-		private $_extra = array();
 
 		// constructor
 		public function __construct( $array = array() ){
@@ -154,6 +156,7 @@
 			$j = $i;
 
 			while( $pieces ){
+				// find reference
 				$field = array_pop( $pieces );	
 
 				if( !isset( $cls::$_refs[ $field ] ) )
@@ -162,14 +165,17 @@
 				$ref = $cls::$_refs[ $field ];
 				$cls = $ref[ 0 ];
 
+				// init variables Ti
 				$j = $i;
 				$i++;
 				$jfield = $ref[ 1 ];
 				$ifield = $field.'_id';
 
+				// append join to tables
 				$tables[] = '`'.$cls::$_table.'` T'.$i." ON ( T$i.`$jfield` = T$j.`$ifield` )";
 			}
 
+			// cache Ti variable into joins
 			$joins[ $join ] = "T$i";
 		}
 	}
@@ -185,6 +191,7 @@
 	// class definition
 	class EXPR {
 		private $_array;
+		public static $_delimiter = ' AND ';
 
 		// constructor
 		public function __construct( $array = array() ){
@@ -211,10 +218,24 @@
 				}
 			}
 
-			// default AND
-			return implode( ' AND ', $q );
+			$cls = get_called_class();
+			return implode( $cls::$_delimiter, $q );
 		}
 	}
+
+	// class definition
+	class Q_OR extends EXPR {
+		public static $_delimiter = ' OR ';
+	}
+
+	// class definition
+	class Q_NOT extends EXPR {
+		public static $_delimiter = ' AND NOT ';
+
+		public function sql( $vars, &$subs ){
+			return 'NOT '.parent::sql( $vars, $subs );
+		}
+	}	
 
 
 /**

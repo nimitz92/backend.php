@@ -6,29 +6,7 @@
  *
 **/
 
-	require_once( BP_ROOT. 'db.php' );
-
-	class User extends Model {
-		var $id;
-		var $username;
-		var $email;
-
-		static $_table = 'auth_user';
-		static $_pk = 'id';
-	}
-
-	class Person extends Model {
-		var $node_ptr_id;
-		var $user_id;
-		var $gender;
-		var $photo_id;
-
-		static $_table = 'people_person';
-		static $_pk = 'node_ptr_id';
-		static $_refs = array(
-			'user' => array( 'User', 'id' ),
-		);
-	}
+	require_once( ROOT. 'models.php' );
 
 	$qs = User::objects()->filter( array( 'email' => 'vibhaj.itbhu@gmail.com' ) )->only( array( 'id', 'username', 'email' ) )->order_by( array( 'username' ) )->using( 'default' );
 
@@ -46,7 +24,7 @@
 	print_r( $dbt );
 	echo '<br /><br />';
 
-	$p = Person::objects()->values( array( 'user__id', 'gender', 'user__username' ) )->get( array( 'user__email' => 'vibhaj.itbhu@gmail.com', 'user__username' => 'vibhaj8' ) );
+	$p = Person::objects()->values( array( 'user__id', 'gender', 'user__username' ) )->get( new Q_OR( array( 'user__email' => 'vibhajitbhu@gmail.com', 'user__username' => 'vibhaj8' ) ) );
 	print_r( $p );
 	echo '<br /><br />';
 
