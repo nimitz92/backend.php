@@ -8,7 +8,7 @@
 
 	require_once( BP_ROOT. 'db.php' );
 
-	class DBTest extends Model {
+	class User extends Model {
 		var $id;
 		var $username;
 		var $email;
@@ -17,7 +17,20 @@
 		static $_pk = 'id';
 	}
 
-	$qs = DBTest::objects()->filter( array( 'email' => 'vibhaj.itbhu@gmail.com' ) )->only( array( 'id', 'username', 'email' ) )->order_by( array( 'username' ) )->using( 'default' );
+	class Person extends Model {
+		var $node_ptr_id;
+		var $user_id;
+		var $gender;
+		var $photo_id;
+
+		static $_table = 'people_person';
+		static $_pk = 'node_ptr_id';
+		static $_refs = array(
+			'user' => array( 'User', 'id' ),
+		);
+	}
+
+	$qs = User::objects()->filter( array( 'email' => 'vibhaj.itbhu@gmail.com' ) )->only( array( 'id', 'username', 'email' ) )->order_by( array( 'username' ) )->using( 'default' );
 
 	foreach( $qs as $row )
 		print_r( $row );
@@ -29,11 +42,15 @@
 	//$row->save();
 	//$row->delete();
 
-	$dbt = DBTest::objects()->get( array( 'email' => 'vibhajitbhu@gmail.com' ) );
+	$dbt = User::objects()->get( array( 'email' => 'vibhajitbhu@gmail.com' ) );
 	print_r( $dbt );
 	echo '<br /><br />';
 
-	//$dbt = DBTest::objects()->create( array( 'email' => 'vibhajitbhu@gmail.com', 'username' => 'vbj' ) );
+	$p = Person::objects()->values( array( 'user__id', 'gender', 'user__username' ) )->get( array( 'user__email' => 'vibhaj.itbhu@gmail.com', 'user__username' => 'vibhaj8' ) );
+	print_r( $p );
+	echo '<br /><br />';
+
+	//$dbt = User::objects()->create( array( 'email' => 'vibhajitbhu@gmail.com', 'username' => 'vbj' ) );
 	//print_r( $dbt );
 
 	echo 'Hello World! from BlackPearl Sample Project<br /><br />';

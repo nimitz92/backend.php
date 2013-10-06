@@ -60,7 +60,7 @@
 	// model definition
 	abstract class Model {
 		// objects manager
-		private static $_objects = false;
+		private static $_objects;
 
 		// meta settings for model
 		public static $_table = 'model';
@@ -73,6 +73,8 @@
 
 		// constructor
 		public function __construct( $array = array() ){
+			self::$_objects = $_objects = array();
+
 			foreach( $array as $k => $v ){
 				// check if property
 				if( property_exists( get_called_class(), $k ) ){
@@ -138,15 +140,36 @@
 
 		// objects manager helper
 		public static function objects(){
-			if( !self::$_objects ){
-				self::$_objects = new DB( get_called_class() );
+			$cls = get_called_class();
+			if( !isset( self::$_objects[ $cls ] ) ){
+				self::$_objects[ $cls ] = new DB( $cls );
 			}
-			return self::$_objects;
+
+			return self::$_objects[ $cls ];
 		}
 
 		// join setup helper in model
 		public static function setup_join( $join, $pieces, &$i, &$joins, &$tables ){
-			$i++;
+			$cls = get_called_class();
+			$j = $i;
+
+			while( $pieces ){
+				$field = array_pop( $pieces );	
+
+				if( !isset( $cls::$_refs[ $field ] ) )
+					die( 'Referential Field Not Found: '. $field );
+
+				$ref = $cls::$_refs[ $field ];
+				$cls = $ref[ 0 ];
+
+				$j = $i;
+				$i++;
+				$jfield = $ref[ 1 ];
+				$ifield = $field.'_id';
+
+				$tables[] = '`'.$cls::$_table.'` T'.$i." ON ( T$i.`$jfield` = T$j.`$ifield` )";
+			}
+
 			$joins[ $join ] = "T$i";
 		}
 	}
@@ -189,7 +212,7 @@
 			}
 
 			// default AND
-			return implode( 'AND ', $q );
+			return implode( ' AND ', $q );
 		}
 	}
 
@@ -367,6 +390,8 @@
 			// form query
 			$q = implode( ' ', $q );
 
+			print_r( $q );
+
 			// execute query
 			$conn = db_get_connection( $this->_dbkey );
 			$stmt = $conn->prepare( $q );
@@ -423,7 +448,7 @@
 			}
 
 			// return table joins
-			return implode( ', ', $tables );
+			return implode( ' INNER JOIN ', $tables );
 		}
 
 		// compile and run insert query
@@ -568,6 +593,9 @@
 		function get( $where ){
 			$db = $this->filter( $where );
 			$db->select();
+
+			if( $db->_count == 0 )
+				die( 'Does Not Exist' );
 
 			if( $db->_count != 1 )
 				die( 'Multiple Rows Returned' );
