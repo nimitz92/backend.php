@@ -4,6 +4,9 @@
  *
  *	Vibhaj Rajan <vibhaj8@gmail.com>
  *
+ *	Licenced under MIT Licence 
+ *	http://www.opensource.org/licenses/mit-license.php
+ *
 **/
 
 	require_once( ROOT. 'models.php' );
@@ -20,8 +23,8 @@
 	//$row->save();
 	//$row->delete();
 
-	$dbt = User::objects()->get( array( 'email' => 'vibhajitbhu@gmail.com' ) );
-	print_r( $dbt );
+	$u = User::objects()->get( array( 'email' => 'vibhajitbhu@gmail.com' ) );
+	print_r( $u );
 	echo '<br /><br />';
 
 	$p = Person::objects()->values( array( 'user__id', 'user__username', '*' ) )->get( new Q_OR( array( 'user__email' => 'vibhajitbhu@gmail.com', 'user__username' => 'vibhaj8' ) ) );

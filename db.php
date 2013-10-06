@@ -4,6 +4,9 @@
  *
  *	Vibhaj Rajan <vibhaj8@gmail.com>
  *
+ *	Licenced under MIT Licence 
+ *	http://www.opensource.org/licenses/mit-license.php
+ *
 **/
 
 	// initialize and get connection by db key
@@ -54,6 +57,9 @@
  *	Database Object Model Abstract Base Class
  *
  *	Vibhaj Rajan <vibhaj8@gmail.com>
+ *
+ *	Licenced under MIT Licence 
+ *	http://www.opensource.org/licenses/mit-license.php
  *
 **/
 	
@@ -185,9 +191,12 @@
 
 
 /**
- *	Query Expression Base Class
+ *	Query Expression Classes
  *
  *	Vibhaj Rajan <vibhaj8@gmail.com>
+ *
+ *	Licenced under MIT Licence 
+ *	http://www.opensource.org/licenses/mit-license.php
  *
 **/
 
@@ -245,6 +254,9 @@
  *	Database Object Manager Class
  *
  *	Vibhaj Rajan <vibhaj8@gmail.com>
+ *
+ *	Licenced under MIT Licence 
+ *	http://www.opensource.org/licenses/mit-license.php
  *
 **/
 

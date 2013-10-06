@@ -4,6 +4,9 @@
  *
  *	Vibhaj Rajan <vibhaj8@gmail.com>
  *
+ *	Licenced under MIT Licence 
+ *	http://www.opensource.org/licenses/mit-license.php
+ *
 **/
 
 	define( 'ROOT', dirname( __FILE__ ) .DIRECTORY_SEPARATOR );
