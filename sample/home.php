@@ -24,7 +24,7 @@
 	print_r( $dbt );
 	echo '<br /><br />';
 
-	$p = Person::objects()->values( array( 'user__id', 'gender', 'user__username' ) )->get( new Q_OR( array( 'user__email' => 'vibhajitbhu@gmail.com', 'user__username' => 'vibhaj8' ) ) );
+	$p = Person::objects()->values( array( 'user__id', 'user__username', '*' ) )->get( new Q_OR( array( 'user__email' => 'vibhajitbhu@gmail.com', 'user__username' => 'vibhaj8' ) ) );
 	print_r( $p );
 	echo '<br /><br />';
 

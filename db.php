@@ -66,12 +66,10 @@
 		public static $_table = 'model';
 		public static $_pk = 'id';
 
-		// public variables
-		public $_extra = array();
-
 		// private variables
 		private $_loaded = array();
 		private $_changed = array();
+		private $_extra = array();
 
 		// constructor
 		public function __construct( $array = array() ){
@@ -95,6 +93,11 @@
 			if( $this->$name != $value )
 				$this->$name = $value;
 				$this->_changed[ $name ] = true;
+		}
+
+		// getter for extra fields
+		public function get( $key ){
+			return isset( $this->_extra[ $key ] ) ? $this->_extra[ $key ] : null;
 		}
 
 		// save or create as per pk
@@ -327,10 +330,13 @@
 			}
 
 			// add projection if none
-			if( !$this->_select ){
+			if( !$this->_select || in_array( '*', $this->_select ) ){
 				foreach( array_keys( get_class_vars( $this->_model ) ) as $k )
 					if( $k[ 0 ] != '_' )
 						$this->_select[] = $k;
+
+				if( in_array( '*', $this->_select ) )
+					unset( $this->_select[ array_search( '*', $this->_select ) ] );
 			}
 
 			// add select keys to vars
@@ -411,7 +417,7 @@
 			// form query
 			$q = implode( ' ', $q );
 
-			print_r( $q );
+			//print_r( $q );
 
 			// execute query
 			$conn = db_get_connection( $this->_dbkey );
