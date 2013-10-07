@@ -9,18 +9,19 @@
  *
 **/
 
+	// default settings
 	define( 'ROOT', dirname( __FILE__ ) .DIRECTORY_SEPARATOR );
 
-	/**
-	 * 	@configuration settings
-	**/
-	define( 'HOST', 'http://127.0.0.1' );
-	define( 'APP', '/iospace/blackpearl/sample/' );
-
+	// project settings
 	define( 'BP_ROOT', ROOT .'..' .DIRECTORY_SEPARATOR );
-	define( 'HOME', 'home.php' );
 	define( 'DEBUG', false );
 
+	// url utility settings
+	define( 'HOST', 'http://127.0.0.1' );
+	define( 'APP', '/iospace/blackpearl/sample/' );
+	define( 'HOME', 'test' );
+
+	// db utility settings
 	$DATABASES = array(
 		'default' => array( 
 			'dsn' => 'mysql:host=localhost;port=3306;dbname=geostore',

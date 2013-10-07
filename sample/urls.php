@@ -1,6 +1,6 @@
 <?php 
 /**
- *	Regex URL Settings
+ *	Sample Project URLs
  *
  *	Vibhaj Rajan <vibhaj8@gmail.com>
  *
@@ -10,9 +10,9 @@
 **/
 
 	$URLS = array(
-		'/^(urls|settings)$/i' => 'home.php',
-		'/^view\/(?P<user>[\w\-]+)\/(?P<id>[\d]+)$/i' => 'home.php',
-		'/^(?P<path>[\w\-\/]*)$/i' => BP_ROOT. 'include.php',
+		'/^(urls|settings)$/i' => array( 'home.php' ),
+		'/^view\/(?P<user>[\w\-]+)\/(?P<id>[\d]+)$/i' => array( 'home.php' ),
+		'/^(?P<path>[\w\-\/]*)$/i' => array( BP_ROOT. 'url/include.php', array( 'root' => ROOT,  ) ),
 	);
 
 ?>
