@@ -168,17 +168,24 @@
 				// find reference
 				$field = array_pop( $pieces );	
 
-				if( !isset( $cls::$_refs[ $field ] ) )
-					die( 'Referential Field Not Found: '. $field );
+				if( !isset( $cls::$_refs[ $field ] ) ){
+					$ifield = $cls::$_pk;
 
-				$ref = $cls::$_refs[ $field ];
-				$cls = $ref[ 0 ];
+					$cls = ucfirst( $field );
+					$jfield = $cls::$_pk;
+					
+				}
+				else {
+					$ref = $cls::$_refs[ $field ];
+					$cls = $ref[ 0 ];
+
+					$jfield = $ref[ 1 ];
+					$ifield = $field.'_id';
+				}
 
 				// init variables Ti
 				$j = $i;
 				$i++;
-				$jfield = $ref[ 1 ];
-				$ifield = $field.'_id';
 
 				// append join to tables
 				$tables[] = '`'.$cls::$_table.'` T'.$i." ON ( T$i.`$jfield` = T$j.`$ifield` )";
