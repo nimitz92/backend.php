@@ -10,8 +10,8 @@
 **/
 
 	$URLS = array(
-		'/^(urls|settings)$/i' => array( 'home.php' ),
-		'/^view\/(?P<user>[\w\-]+)\/(?P<id>[\d]+)$/i' => array( 'home.php' ),
+		'/^(urls|settings)$/i' => array( 'test.php' ),
+		'/^view\/(?P<user>[\w\-]+)\/(?P<id>[\d]+)$/i' => array( 'test.php' ),
 		'/^(?P<path>[\w\-\/]*)$/i' => array( BP_ROOT. 'url/include.php', array( 'root' => ROOT,  ) ),
 	);
 
