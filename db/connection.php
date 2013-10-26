@@ -15,7 +15,7 @@
 
 		// check for key
 		if( !isset( $DATABASES[ $key ] ) )
-			die( 'Configuration Not Found For DB: '. $key );
+			throw new DBImproperlyConfigured( 'Configuration Not Found For DB: '. $key );
 
 		$db = $DATABASES[ $key ];
 
@@ -27,7 +27,7 @@
 				$db[ 'conn' ] = $conn;
 			}
 			catch( PDOException $e ) {
-				die( 'Connection failed: ' . $e->getMessage() );
+				throw new DBConnectionFailed( 'Connection failed: ' . $e->getMessage() );
 			}
 		}
 
@@ -41,7 +41,7 @@
 
 		// check for key
 		if( !isset( $DATABASES[ $key ] ) )
-			die( 'Configuration Not Found For DB: '. $key );
+			throw new DBImproperlyConfigured( 'Configuration Not Found For DB: '. $key );
 
 		$db = $DATABASES[ $key ];
 

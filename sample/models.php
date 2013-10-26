@@ -9,7 +9,7 @@
  *
 **/
 
-	require_once( BP_ROOT. 'db.php' );
+	/*require_once( BP_ROOT. 'db.php' );
 
 	// user model
 	class User extends Model {
@@ -33,6 +33,6 @@
 		static $_refs = array(
 			'user' => array( 'User', 'id' ),
 		);
-	}
+	}*/
 
 ?>

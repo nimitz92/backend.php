@@ -9,9 +9,10 @@
  *
 **/
 
+	require_once( BP_ROOT. 'auth/session.php' );
 	require_once( ROOT. 'models.php' );
 
-	$qs = User::objects()->filter( array( 'email' => 'vibhaj.itbhu@gmail.com' ) )->only( array( 'id', 'username', 'email' ) )->order_by( array( 'username' ) )->using( 'default' );
+	/*$qs = User::objects()->filter( array( 'email' => 'vibhaj.itbhu@gmail.com' ) )->only( array( 'id', 'username', 'email' ) )->order_by( array( 'username' ) )->using( 'default' );
 
 	foreach( $qs as $row )
 		print_r( $row );
@@ -32,14 +33,25 @@
 	echo '<br /><br />';
 
 	//$dbt = User::objects()->create( array( 'email' => 'vibhajitbhu@gmail.com', 'username' => 'vbj' ) );
-	//print_r( $dbt );
+	//print_r( $dbt );*/
 
 	echo 'Hello World! from BlackPearl Sample Project<br /><br />';
 
 	$user = isset( $URL_ARGS[ 'user' ] ) ? $URL_ARGS[ 'user' ] : '';
 	$id = isset( $URL_ARGS[ 'id' ] ) ? $URL_ARGS[ 'id' ] : '';
 
+	$u = null;
+	if( $user )
+		$u = session_user( $SESSION );
+
 	echo "Parameters: Username=$user ID=$id<br /><br />";
-	echo "Pass parameters in URL /view/username/id/";
+	echo "Pass parameters in URL /view/username/id/<br /><br />";
+
+	echo '<a href="'.APP.'view/vibhaj-rajan/15/">Vibhaj\'s Posts</a><br /><br />';
+
+	if( $SESSION->user_id )
+		echo '<a href="'.APP.'logout/">Logout</a>';
+	else
+		echo '<a href="'.APP.'login/">Login</a>';
 
 ?>

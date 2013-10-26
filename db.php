@@ -9,6 +9,7 @@
  *
 **/
 
+	require_once( BP_ROOT. 'db/exception.php' );
 	require_once( BP_ROOT. 'db/connection.php' );
 	require_once( BP_ROOT. 'db/model.php' );
 	require_once( BP_ROOT. 'db/expression.php' );

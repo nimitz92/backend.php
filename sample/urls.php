@@ -10,7 +10,7 @@
 **/
 
 	$URLS = array(
-		'/^(urls|settings)$/i' => array( 'test.php' ),
+		'/^(auth|db|urls|settings)/i' => array( 'test.php' ),
 		'/^view\/(?P<user>[\w\-]+)\/(?P<id>[\d]+)$/i' => array( 'test.php' ),
 		'/^(?P<path>[\w\-\/]*)$/i' => array( BP_ROOT. 'url/include.php', array( 'root' => ROOT,  ) ),
 	);

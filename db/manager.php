@@ -72,6 +72,25 @@
 			return $db;
 		}
 
+		public function query( $q, $subs ){
+			$model = $this->_model;
+			$q = str_replace( '{MODEL_TABLE}', $model::$_table, $q );
+
+			// execute query
+			$conn = db_get_connection( $this->_dbkey );
+			$stmt = $conn->prepare( $q );
+			$res = $stmt->execute( $subs );
+
+			// check for error
+			if( $res === false ){
+				$error = $stmt->errorInfo();
+				throw new DBQueryError( ( DEBUG ? 'Error Executing Query: '. $q : '' ) .' Error: '.$error[ 2 ].' (Code '.$error[ 1 ].')' );
+			}
+			
+			// return result
+			return $res;
+		}
+
 		// compile and run select query
 		public function select(){
 			// check for results in cache
@@ -81,6 +100,7 @@
 			// init variables
 			$vars = array();
 			$subs = array();
+			$model = $this->_model;
 
 			// add SELECT
 			$q = array( "SELECT" );
@@ -92,12 +112,17 @@
 
 			// add projection if none
 			if( !$this->_select || in_array( '*', $this->_select ) ){
-				foreach( array_keys( get_class_vars( $this->_model ) ) as $k )
+				foreach( array_keys( get_class_vars( $model ) ) as $k )
 					if( $k[ 0 ] != '_' )
 						$this->_select[] = $k;
 
 				if( in_array( '*', $this->_select ) )
 					unset( $this->_select[ array_search( '*', $this->_select ) ] );
+			}
+
+			// add pk in select if not exists
+			if( !in_array( $model::$_pk, $this->_select ) ){
+				$this->_select[] = $model::$_pk;
 			}
 
 			// add select keys to vars
@@ -188,7 +213,7 @@
 			// check for errors
 			if( $res === false ){
 				$error = $stmt->errorInfo();
-				die( 'Error Executing Query: '. $q. ' Error: '.$error[ 2 ].' (Code '.$error[ 1 ].')' );
+				throw new DBQueryError( 'Error Executing Query: '. $q. ' Error: '.$error[ 2 ].' (Code '.$error[ 1 ].')' );
 			}
 			
 			// cache results
@@ -196,7 +221,7 @@
 
 			// create objects from results
 			foreach( $stmt->fetchAll( PDO::FETCH_ASSOC ) as $row ){
-				$this->_result[] = new $this->_model( $row );
+				$this->_result[] = new $model( $row );
 				$this->_count++;
 			}
 
@@ -274,7 +299,7 @@
 			// check for error
 			if( $res === false ){
 				$error = $stmt->errorInfo();
-				die( ( DEBUG ? 'Error Executing Query: '. $q : '' ) .' Error: '.$error[ 2 ].' (Code '.$error[ 1 ].')' );
+				throw new DBQueryError( ( DEBUG ? 'Error Executing Query: '. $q : '' ) .' Error: '.$error[ 2 ].' (Code '.$error[ 1 ].')' );
 			}
 			
 			// return result
@@ -324,7 +349,7 @@
 			// check for errors
 			if( $res === false ){
 				$error = $stmt->errorInfo();
-				die( 'Error Executing Query: '. $q. ' Error: '.$error[ 2 ].' (Code '.$error[ 1 ].')' );
+				throw new DBQueryError( 'Error Executing Query: '. $q. ' Error: '.$error[ 2 ].' (Code '.$error[ 1 ].')' );
 			}
 			
 			// return result
@@ -364,7 +389,7 @@
 			// check for errors
 			if( $res === false ){
 				$error = $stmt->errorInfo();
-				die( 'Error Executing Query: '. $q. ' Error: '.$error[ 2 ].' (Code '.$error[ 1 ].')' );
+				throw new DBQueryError( 'Error Executing Query: '. $q. ' Error: '.$error[ 2 ].' (Code '.$error[ 1 ].')' );
 			}
 			
 			// return result
@@ -372,7 +397,7 @@
 		}
 
 		// helper to create new instance of model in db
-		public function create( $args ){
+		public function create( $args = array() ){
 			$obj = new $this->_model( $args );
 			return $obj->save( true );
 		}
@@ -383,10 +408,10 @@
 			$db->select();
 
 			if( $db->_count == 0 )
-				die( 'Does Not Exist' );
+				throw new DBDoesNotExist( 'Does Not Exist' );
 
 			if( $db->_count != 1 )
-				die( 'Multiple Rows Returned' );
+				throw new DBMultipleObjectsReturned( 'Multiple Rows Returned' );
 
 			return $db->_result[ 0 ];
 		}
