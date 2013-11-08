@@ -11,6 +11,6 @@
 
 	require_once( BP_ROOT. 'auth/session.php' );
 
-	$SESSION->logout();
+	$SM->logout();
 
 ?>

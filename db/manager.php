@@ -9,6 +9,8 @@
  *
 **/
 
+	require_once( BP_ROOT. 'db/expression.php' );
+
 	// class definition
 	class DB implements IteratorAggregate  {
 		private $_model;
@@ -303,57 +305,58 @@
 			}
 			
 			// return result
-			return $res;
+			return $conn->lastInsertId();
 		}
 
 		// compile and run update query
 		public function update( $set ){
-			// init variables
-			$model = $this->_model;
-			$vars = array();
-			$subs = array();
-
-			// add UPDATE table SET
-			$q = array( "UPDATE", '`'.$model::$_table.'`', 'SET' );
-
-			// add where keys to vars
-			foreach( $this->_where->vars() as $e ){
-				$vars[ $e ] = '`'.$e.'`';
-			}
-
-			// add var=expr
 			if( $set ){
+
+				// init variables
+				$model = $this->_model;
+				$vars = array();
+				$subs = array();
+				
+				// add UPDATE table SET
+				$q = array( "UPDATE", '`'.$model::$_table.'`', 'SET' );
+
+				// add where keys to vars
+				foreach( $this->_where->vars() as $e ){
+					$vars[ $e ] = '`'.$e.'`';
+				}
+
+				// add var=expr
 				$qs = array();
 				foreach( $set as $k => $v ){
 					array_push( $qs, '`'.$k.'`=?' );
 					$subs[] = $v;
 				}
 				array_push( $q, implode( ', ', $qs ) );	
-			}
 			
-			// add WHERE expression
-			if( $this->_where ){
-				$qs = $this->_where->sql( $vars, $subs );
-				if( $qs )
-					array_push( $q, 'WHERE', $qs );	
-			}
-			
-			// form query
-			$q = implode( ' ', $q );
+				// add WHERE expression
+				if( $this->_where ){
+					$qs = $this->_where->sql( $vars, $subs );
+					if( $qs )
+						array_push( $q, 'WHERE', $qs );	
+				}
+				
+				// form query
+				$q = implode( ' ', $q );
 
-			// execute query
-			$conn = db_get_connection( $this->_dbkey );
-			$stmt = $conn->prepare( $q );
-			$res = $stmt->execute( $subs );
+				// execute query
+				$conn = db_get_connection( $this->_dbkey );
+				$stmt = $conn->prepare( $q );
+				$res = $stmt->execute( $subs );
 
-			// check for errors
-			if( $res === false ){
-				$error = $stmt->errorInfo();
-				throw new DBQueryError( 'Error Executing Query: '. $q. ' Error: '.$error[ 2 ].' (Code '.$error[ 1 ].')' );
+				// check for errors
+				if( $res === false ){
+					$error = $stmt->errorInfo();
+					throw new DBQueryError( 'Error Executing Query: '. $q. ' Error: '.$error[ 2 ].' (Code '.$error[ 1 ].')' );
+				}
+				
+				// return result
+				return $res;
 			}
-			
-			// return result
-			return $res;
 		}
 
 		// compile and run delete query
@@ -424,7 +427,7 @@
 				return $db->_count;
 			}
 
-			return $this->count;
+			return $this->_count;
 		}
 
 		// add projection columns

@@ -13,3 +13,10 @@ REQUIREMENTS
 	-mod_rewrite enabled
 	-htaccess enabled
 	-pdo enabled
+	-hybridauth (optional) 
+	-htmlpurifier (optional)
+
+HYBRIDAUTH INTEGRATION
+	-Add the fllowing line to index.php before line "Hybrid_Endpoint::process();"
+	-require_once( '(path/to/project)/settings.php' );
+	-require_once( BP_ROOT. "auth/session.php" );

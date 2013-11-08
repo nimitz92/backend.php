@@ -11,6 +11,10 @@
 
 	$URLS = array(
 		'/^(auth|db|urls|settings)/i' => array( 'test.php' ),
+		'/^login\/?(?P<provider>[\w\-]+)?$/i' => array( 'login.php' ),
+		'/^logout$/i' => array( BP_ROOT. 'auth/logout.php' ),
+
+		'/^embed$/i' => array( BP_ROOT. 'url/embed.php' ),
 		'/^view\/(?P<user>[\w\-]+)\/(?P<id>[\d]+)$/i' => array( 'test.php' ),
 		'/^(?P<path>[\w\-\/]*)$/i' => array( BP_ROOT. 'url/include.php', array( 'root' => ROOT,  ) ),
 	);

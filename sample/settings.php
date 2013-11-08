@@ -22,6 +22,7 @@
 	define( 'HOME', 'test' );
 
 	// auth utility settings
+	define( 'HA_ROOT', ROOT .'..' .DIRECTORY_SEPARATOR .'..' .DIRECTORY_SEPARATOR .'auth' .DIRECTORY_SEPARATOR );
 	define( 'COOKIE_NAME', 'sessionid' );
 	define( 'COOKIE_EXPIRY', 15 );
 	define( 'COOKIE_DOMAIN', '127.0.0.1' );
@@ -45,6 +46,9 @@
 			'pass' => 'krishna',
 		),
 	);
+	
+	// utility settings
+	define( 'CL_ROOT', ROOT .'..' .DIRECTORY_SEPARATOR .'clean' .DIRECTORY_SEPARATOR );
 	
 ?>
 

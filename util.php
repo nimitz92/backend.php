@@ -66,4 +66,128 @@
 		);
 	}
 
+	// slugify text
+	function slugify( $text ){
+		// replace non letter or digits by -
+		$text = preg_replace( '~[^\\pL\d]+~u', '-', $text );
+
+		// trim
+		$text = trim( $text, '-' );
+
+		// transliterate
+		$text = iconv( 'utf-8', 'us-ascii//TRANSLIT', $text );
+
+		// lowercase
+		$text = strtolower( $text );
+
+		// remove unwanted characters
+		$text = preg_replace( '~[^-\w]+~', '', $text );
+
+		if( empty( $text ) ){
+			return '';
+		}
+
+		return $text;
+	}
+
+	// truncate html
+	function html_truncate( $maxLength, $html, $isUtf8 = true ){
+		$printedLength = 0;
+		$position = 0;
+		$tags = array();
+		$result = '';
+
+		// For UTF-8, we need to count multibyte sequences as one character.
+		$re = $isUtf8 ? '{</?([a-z]+)[^>]*>|&#?[a-zA-Z0-9]+;|[\x80-\xFF][\x80-\xBF]*}' : '{</?([a-z]+)[^>]*>|&#?[a-zA-Z0-9]+;}';
+
+		while( $printedLength < $maxLength && preg_match( $re, $html, $match, PREG_OFFSET_CAPTURE, $position ) ){
+			list( $tag, $tagPosition ) = $match[ 0 ];
+
+			// Print text leading up to the tag.
+			$str = substr( $html, $position, $tagPosition - $position );
+			if( $printedLength + strlen( $str ) > $maxLength ){
+				$result .= substr( $str, 0, $maxLength - $printedLength );
+				$printedLength = $maxLength;
+				break;
+			}
+
+			$result .= $str;
+			$printedLength += strlen( $str );
+			if( $printedLength >= $maxLength ) break;
+
+			if( $tag[ 0 ] == '&' || ord( $tag ) >= 0x80 ){
+				// Pass the entity or UTF-8 multibyte sequence through unchanged.
+				$result .= $tag;
+				$printedLength++;
+			}
+			else {
+				// Handle the tag.
+				$tagName = $match[ 1 ][ 0 ];
+				if( $tag[1] == '/' ){
+					// This is a closing tag.
+					$openingTag = array_pop( $tags );
+					assert( $openingTag == $tagName ); // check that tags are properly nested.
+
+					$result .= $tag;
+				}
+				else if( $tag[ strlen( $tag ) - 2 ] == '/'){
+					// Self-closing tag.
+					$result .= $tag;
+				}
+				else {
+					// Opening tag.
+					$result .= $tag;
+					$tags[] = $tagName;
+				}
+			}
+
+			// Continue after the tag.
+			$position = $tagPosition + strlen( $tag );
+		}
+
+		// Print any remaining text.
+		if( $printedLength < $maxLength && $position < strlen( $html ) )
+			$result .= substr( $html, $position, $maxLength - $printedLength );
+
+		// Close any open tags.
+		while ( !empty( $tags ) )
+			$result .= '</'.array_pop( $tags ) .'>';
+
+		return $result;
+	}
+
+	// clean html
+	function html_clean( $html ){
+		//strip_tags( $html, '' );
+
+		require_once( CL_ROOT. 'htmLawed.php' );
+		return htmLawed( $html );
+
+		/*require_once ( CL_ROOT. 'library/HTMLPurifier.auto.php' );
+		$config = HTMLPurifier_Config::createDefault();
+		$purifier = new HTMLPurifier( $config );
+		return $purifier->purify( $html );
+		
+		return $html;*/
+	}
+
+	// get unique alias
+	function unique_alias( $cls, $name, $array = array() ){
+		$alias = slugify( $name );
+		$array[ 'alias' ] = new Q_START( array( 'alias' => $alias ) );
+		
+		$res = $cls::objects()->filter( $array )->order_by( array( 'repeat' ) )->select();
+		$cnt = count( $res );
+
+		if( $cnt == 0 ){
+			return array( $alias, 1 );
+		}
+		else {
+			$max = $res[ $cnt - 1 ];
+			$cnt = $max->repeat + 1;
+			return array( $alias.'-'.$cnt, $cnt );
+		}
+	}
+
+
 ?>

@@ -9,6 +9,9 @@
 
 RewriteEngine on
 
+#	allow css js img
+RewriteCond %{REQUEST_URI} !^.*\.(jpg|css|js|gif|png)$ [NC]
+
 # 	forward everything to index.php
 RewriteRule ^(.*)$ index.php [L]
 

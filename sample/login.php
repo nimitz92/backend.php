@@ -9,36 +9,20 @@
  *
 **/
 
-	require_once( BP_ROOT. 'auth/session.php' );
-	require_once( ROOT. 'models.php' );
-
-	$error = '';
-
-	if( isset( $_POST[ 'username' ] ) && isset( $_POST[ 'passwd' ] ) ){
-		$next = isset( $_POST[ 'next' ] ) ? $_POST[ 'next' ] : LOGIN_REDIRECT;
-
-		if( !$_POST[ 'username' ] )
-			$error = 'Username cannot be empty';
-		elseif( !$_POST[ 'passwd' ] )
-			$error = 'Password cannot be empty';
-		else {
-			try {
-				User::login( $_POST[ 'username' ], $_POST[ 'passwd' ], $SESSION, $next );
-				exit();
-			}
-			catch( AuthInvalidCredentials $e ){
-				$error = 'Invalid Credentials';
-			}	
-		}
-	}
-	else
-		$next = isset( $_GET[ 'next' ] ) ? $_GET[ 'next' ] : LOGIN_REDIRECT;
+	require_once( BP_ROOT. 'auth/login.php' );
 
 ?>
 
 <html>
+	<head>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+		<style type="text/css">
+			body, input { font-family: 'Open Sans', sans-serif; font-size: 14px; }
+			input { border: solid 1px #ccc; padding: 5px 12px; }
+		</style>
+	</head>
 	<body>
-		<div style="width: 185px; margin: 150px auto 0; text-align: left;">
+		<div style="width: 185px; text-align: left;">
 
 			<?php if( $error ){
 				echo '<div style="border: solid 1px red; color: darkred; font-weight: bold;">'.$error.'</div>';

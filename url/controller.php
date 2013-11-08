@@ -20,7 +20,7 @@
 		if( preg_match( $pattern, $path, $URL_ARGS ) ){
 			$path = $value[ 0 ];
 			if( isset( $value[ 1 ] ) )
-				array_merge( $URL_ARGS, $value[ 1 ] );
+				$URL_ARGS = array_merge( $URL_ARGS, $value[ 1 ] );
 			$matched = true;
 			break;
 		}

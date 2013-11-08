@@ -56,7 +56,7 @@
 		public function save( $force_insert = false ){
 			$pk = self::$_pk;
 			$pkval = $this->$pk;
-			$db = self::objects()->filter( array( $pk => $pkval ) );
+			$db = self::objects();
 			$args = array();
 
 			// check for insert
@@ -67,8 +67,13 @@
 						$args[ $k ] = $v;
 				
 				// insert into db
-				$db->insert( $args );
-				return $this;
+				$newpkval = $db->insert( $args );
+				if( $pkval )
+					return $db->get( array( $pk => $pkval ) );
+				elseif( $newpkval )
+					return $db->get( array( $pk => $newpkval ) );
+				else
+					return $db->get( $args );
 			}
 			else {	
 				// collect args
@@ -77,7 +82,7 @@
 						$args[ $k ] = $this->$k;
 
 				// update in db
-				$db->update( $args );
+				$db->filter( array( $pk => $pkval ) )->update( $args );
 				return $this;
 			}
 		}
