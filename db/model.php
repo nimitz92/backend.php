@@ -83,6 +83,7 @@
 
 				// update in db
 				$db->filter( array( $pk => $pkval ) )->update( $args );
+				$this->_changed = array();
 				return $this;
 			}
 		}

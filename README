@@ -14,7 +14,8 @@ REQUIREMENTS
 	-htaccess enabled
 	-pdo enabled
 	-hybridauth (optional) 
-	-htmlpurifier (optional)
+	-finediff (optional)
+	-htmlawed (optional)
 
 HYBRIDAUTH INTEGRATION
 	-Add the fllowing line to index.php before line "Hybrid_Endpoint::process();"

@@ -148,4 +148,42 @@
 		}
 	}
 
+	// class definition
+	class F_EQ extends EXPR {
+		protected $_key;
+		protected $_value;
+
+		// constructor
+		public function __construct( $key, $value ){
+			$this->key = $key;
+			$this->value = $value;
+		}
+
+		// generate sql
+		public function sql( $vars, &$subs ){
+			$subs[] = $this->value;
+			return $vars[ $this->key ].'= ?';
+		}
+	}
+
+	// class definition
+	class F_INC extends F_EQ {
+		
+		// generate sql
+		public function sql( $vars, &$subs ){
+			$subs[] = $this->value;
+			return $vars[ $this->key ].'='.$vars[ $this->key ].' + ?';
+		}
+	}
+
+	// class definition
+	class F_DEC extends F_EQ {
+		
+		// generate sql
+		public function sql( $vars, &$subs ){
+			$subs[] = $this->value;
+			return $vars[ $this->key ].'='.$vars[ $this->key ].' - ?';
+		}
+	}
+
 ?>

@@ -92,6 +92,8 @@
 
 	// truncate html
 	function html_truncate( $maxLength, $html, $isUtf8 = true ){
+		return tidy_repair_string( substr( $html, 0, $maxLength ), array( 'wrap' => 0, 'show-body-only' => TRUE ), $isUtf8 ? 'utf8' : 'ascii' ); 
+
 		$printedLength = 0;
 		$position = 0;
 		$tags = array();
@@ -162,19 +164,12 @@
 
 		require_once( CL_ROOT. 'htmLawed.php' );
 		return htmLawed( $html );
-
-		/*require_once ( CL_ROOT. 'library/HTMLPurifier.auto.php' );
-		$config = HTMLPurifier_Config::createDefault();
-		$purifier = new HTMLPurifier( $config );
-		return $purifier->purify( $html );
-		
-		return $html;*/
 	}
 
 	// get unique alias
-	function unique_alias( $cls, $name, $array = array() ){
+	function unique_alias( $cls, $name, $array = array(), $col = 'alias' ){
 		$alias = slugify( $name );
-		$array[ 'alias' ] = new Q_START( array( 'alias' => $alias ) );
+		$array[ $col ] = new Q_START( array( $col => $alias ) );
 		
 		$res = $cls::objects()->filter( $array )->order_by( array( 'repeat' ) )->select();
 		$cnt = count( $res );
@@ -187,6 +182,24 @@
 			$cnt = $max->repeat + 1;
 			return array( $alias.'-'.$cnt, $cnt );
 		}
+	}
+
+	// text diff
+	function text_diff( $old, $new ){
+		if( $new != $old ){
+			require_once( DF_ROOT. 'finediff.php' );
+			return FineDiff::getDiffOpcodes( $old, $new );	
+		}
+		return '';
+	}
+
+	// text patch
+	function text_patch( $old, $patch ){
+		if( $patch ){
+			require_once( DF_ROOT. 'finediff.php' );
+			return FineDiff::renderToTextFromOpcodes( $old, $patch );	
+		}
+		return $old;
 	}
 
 

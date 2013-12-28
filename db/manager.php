@@ -328,8 +328,14 @@
 				// add var=expr
 				$qs = array();
 				foreach( $set as $k => $v ){
-					array_push( $qs, '`'.$k.'`=?' );
-					$subs[] = $v;
+					if( is_a( $v, 'EXPR' ) ){
+						$vars[ $k ] = '`'.$k.'`';
+						array_push( $qs, $v->sql( $vars, $subs ) );
+					}
+					else {
+						array_push( $qs, '`'.$k.'`=?' );
+						$subs[] = $v;	
+					}
 				}
 				array_push( $q, implode( ', ', $qs ) );	
 			

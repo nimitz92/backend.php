@@ -84,7 +84,8 @@
 				'google' => 'Google',
 				'facebook' => 'Facebook',
 				'twitter' => 'Twitter',
-				'linkedin' => 'LinkedIn'
+				'linkedin' => 'LinkedIn',
+				'yahoo' => 'Yahoo',
 			);
 
 			$config = HA_ROOT . 'config.php';
@@ -122,11 +123,13 @@
 						// generate username
 						if( $email ){
 							$username = explode( '@', $email );
-							$u = self::objects()->create( array( 'email' => $email, 'username' => $username[ 0 ], $provider => $identifier ) );	
+							list( $username, $repeat ) = unique_alias( 'User', $username[ 0 ], array(), 'username' );
+							$u = self::objects()->create( array( 'email' => $email, 'username' => $username, 'repeat' => $repeat, $provider => $identifier ) );	
 						}
 						else {
 							$username = explode( '@', $identifier );
-							$u = self::objects()->create( array( $provider => $identifier, 'username' => $username[ 0 ] ) );
+							list( $username, $repeat ) = unique_alias( 'User', $username[ 0 ], array(), 'username' );
+							$u = self::objects()->create( array( $provider => $identifier, 'username' => $username, 'repeat' => $repeat ) );
 						}
 						
 						// force sync

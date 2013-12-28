@@ -49,6 +49,8 @@
 	
 	// utility settings
 	define( 'CL_ROOT', ROOT .'..' .DIRECTORY_SEPARATOR .'clean' .DIRECTORY_SEPARATOR );
-	
+	define( 'DF_ROOT', ROOT .'..' .DIRECTORY_SEPARATOR .'diff' .DIRECTORY_SEPARATOR );
+	define( 'MEDIA_ROOT', ROOT. 'drive' .DIRECTORY_SEPARATOR );
+
 ?>
 
