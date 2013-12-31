@@ -10,7 +10,8 @@
 **/
 
 	$URLS = array(
-		'/^(auth|db|urls|settings)/i' => array( 'test.php' ),
+		'/^(urls|settings)/i' => array( 'test.php' ),
+		'/^auth$/i' => array( BP_ROOT. 'auth/endpoint.php' ),
 		'/^login\/?(?P<provider>[\w\-]+)?$/i' => array( 'login.php' ),
 		'/^logout$/i' => array( BP_ROOT. 'auth/logout.php' ),
 

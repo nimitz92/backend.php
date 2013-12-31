@@ -80,23 +80,15 @@
 		public static function social_login( $provider, $next ){
 			global $SM;
 
-			$provider_map = array(
-				'google' => 'Google',
-				'facebook' => 'Facebook',
-				'twitter' => 'Twitter',
-				'linkedin' => 'LinkedIn',
-				'yahoo' => 'Yahoo',
-			);
-
-			$config = HA_ROOT . 'config.php';
-			require_once( HA_ROOT. "Hybrid/Auth.php" );
+			$config = ROOT . 'hybridauth_config.php';
+			require_once( BP_ROOT. "../lib/hybridauth/hybridauth/Hybrid/Auth.php" );
 
 			try{
 				// create an instance for Hybridauth with the configuration file path as parameter
 				$hybridauth = new Hybrid_Auth( $config );
 
 				// call back the requested provider adapter instance 
-				$adapter = $hybridauth->authenticate( $provider_map[ $provider ] );
+				$adapter = $hybridauth->authenticate( $provider );
 				
 				if( !$adapter->isUserConnected() )
 					throw new AuthHAError( 'Social Authentication Failed' );

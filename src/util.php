@@ -162,7 +162,7 @@
 	function html_clean( $html ){
 		//strip_tags( $html, '' );
 
-		require_once( CL_ROOT. 'htmLawed.php' );
+		require_once( BP_ROOT. '../lib/htmlawed/htmLawed.php' );
 		return htmLawed( $html );
 	}
 
@@ -187,7 +187,7 @@
 	// text diff
 	function text_diff( $old, $new ){
 		if( $new != $old ){
-			require_once( DF_ROOT. 'finediff.php' );
+			require_once( BP_ROOT. '../lib/php-finediff/finediff.php' );
 			return FineDiff::getDiffOpcodes( $old, $new );	
 		}
 		return '';

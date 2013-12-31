@@ -9,7 +9,5 @@
 
 RewriteEngine on
 
-
-
 # 	forward everything to index.php
 RewriteRule ^(.*)$ %{HTTP_HOST}/index.php [L]

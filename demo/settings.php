@@ -13,16 +13,15 @@
 	define( 'ROOT', dirname( __FILE__ ) .DIRECTORY_SEPARATOR );
 
 	// project settings
-	define( 'BP_ROOT', ROOT .'..' .DIRECTORY_SEPARATOR );
+	define( 'BP_ROOT', ROOT .'..' .DIRECTORY_SEPARATOR . 'src' .DIRECTORY_SEPARATOR );
 	define( 'DEBUG', false );
 
 	// url utility settings
 	define( 'HOST', 'http://127.0.0.1' );
-	define( 'APP', '/iospace/blackpearl/sample/' );
+	define( 'APP', '/bitbucket/backend.php/demo/' );
 	define( 'HOME', 'test' );
 
 	// auth utility settings
-	define( 'HA_ROOT', ROOT .'..' .DIRECTORY_SEPARATOR .'..' .DIRECTORY_SEPARATOR .'auth' .DIRECTORY_SEPARATOR );
 	define( 'COOKIE_NAME', 'sessionid' );
 	define( 'COOKIE_EXPIRY', 15 );
 	define( 'COOKIE_DOMAIN', '127.0.0.1' );
@@ -36,7 +35,7 @@
 	// db utility settings
 	$DATABASES = array(
 		'default' => array( 
-			'dsn' => 'mysql:host=localhost;port=3306;dbname=blackpearl',
+			'dsn' => 'mysql:host=localhost;port=3306;dbname=thoughtsense',
 			'user' => 'root',
 			'pass' => 'krishna',
 		),
@@ -48,8 +47,6 @@
 	);
 	
 	// utility settings
-	define( 'CL_ROOT', ROOT .'..' .DIRECTORY_SEPARATOR .'clean' .DIRECTORY_SEPARATOR );
-	define( 'DF_ROOT', ROOT .'..' .DIRECTORY_SEPARATOR .'diff' .DIRECTORY_SEPARATOR );
 	define( 'MEDIA_ROOT', ROOT. 'drive' .DIRECTORY_SEPARATOR );
 
 ?>

@@ -10,7 +10,8 @@
 **/
 
 	require_once( BP_ROOT. 'auth/login.php' );
-
+	header( 'Location: '. APP. 'login/google/' );
+	
 ?>
 
 <html>

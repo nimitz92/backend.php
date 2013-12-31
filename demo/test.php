@@ -65,7 +65,7 @@
 	if( isset( $_SESSION[ 'user_id' ] ) )
 		echo '<a href="'.APP.'logout/">Logout</a>';
 	else
-		echo '<a href="'.APP.'login/">Login</a>';
+		echo '<a href="'.APP.'login/google/">Login with Google</a>';
 
 ?>
 
