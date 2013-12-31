@@ -19,7 +19,8 @@
 	// url utility settings
 	define( 'HOST', 'http://127.0.0.1' );
 	define( 'APP', '/bitbucket/backend.php/demo/' );
-	define( 'HOME', 'test' );
+	define( 'HOME', 'home' );
+	define( 'CACHE_DIR', ROOT. 'cache/' );
 
 	// auth utility settings
 	define( 'COOKIE_NAME', 'sessionid' );

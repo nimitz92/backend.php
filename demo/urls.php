@@ -16,7 +16,7 @@
 		'/^logout$/i' => array( BP_ROOT. 'auth/logout.php' ),
 
 		'/^embed$/i' => array( BP_ROOT. 'url/embed.php' ),
-		'/^view\/(?P<user>[\w\-]+)\/(?P<id>[\d]+)$/i' => array( 'test.php' ),
+		'/^view\/(?P<user>[\w\-]+)\/(?P<id>[\d]+)$/i' => array( BP_ROOT. 'url/include.php', array( 'path' => 'home' )),
 		'/^(?P<path>[\w\-\/]*)$/i' => array( BP_ROOT. 'url/include.php', array( 'root' => ROOT,  ) ),
 	);
 
