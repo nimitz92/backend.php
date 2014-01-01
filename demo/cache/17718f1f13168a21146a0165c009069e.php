@@ -1,5 +1,6 @@
 <?php  $app = APP;
  global $URL_ARGS;
+ 
  require_once( BP_ROOT. 'auth/session.php' );
  require_once( ROOT. 'models.php' );
  $user = isset( $URL_ARGS[ 'user' ] ) ? $URL_ARGS[ 'user' ] : '';

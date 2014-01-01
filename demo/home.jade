@@ -1,7 +1,7 @@
 :php
 	$app = APP;
 	global $URL_ARGS;
-	
+
 	require_once( BP_ROOT. 'auth/session.php' );
 	require_once( ROOT. 'models.php' );
 	
@@ -29,6 +29,7 @@ html
 
 		p
 			a(href="#{app}view/vibhaj-rajan/15/")= "Vibhaj's Posts"
+			
 		-if( isset( $_SESSION[ 'user_id' ] ) )
 			a(href="#{app}logout/") Logout
 		-else
