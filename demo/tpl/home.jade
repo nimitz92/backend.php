@@ -1,0 +1,36 @@
+extends layout
+
+block php
+	:php
+		$app = APP;
+		global $URL_ARGS;
+
+		require_once( BP_ROOT. 'auth/session.php' );
+		require_once( ROOT. 'apps/models.php' );
+		
+		$user = isset( $URL_ARGS[ 'user' ] ) ? $URL_ARGS[ 'user' ] : '';
+		$id = isset( $URL_ARGS[ 'id' ] ) ? $URL_ARGS[ 'id' ] : '';
+
+		$u = null;
+		if( $user ){
+			$u = session_user();
+		}
+
+block title
+	title= "Backend.php in Jade"
+
+block content
+	div.body
+		h1= "Backend.php in Jade"
+
+		p= "Parameters: Username=$user ID=$id"
+		p= "Pass parameters in URL /view/username/id/"
+
+		p
+			a(href="#{app}view/vibhaj-rajan/15/")= "Vibhaj's Posts"
+			
+		-if( isset( $_SESSION[ 'user_id' ] ) )
+			a(href="#{app}logout/") Logout
+		-else
+			a(href="#{app}login/google/") Login with Google
+

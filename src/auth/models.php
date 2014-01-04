@@ -80,7 +80,7 @@
 		public static function social_login( $provider, $next ){
 			global $SM;
 
-			$config = ROOT . 'hybridauth_config.php';
+			$config = ROOT . 'core/hybridauth_config.php';
 			require_once( BP_ROOT. "../lib/hybridauth/hybridauth/Hybrid/Auth.php" );
 
 			try{

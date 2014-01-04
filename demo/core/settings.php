@@ -10,7 +10,7 @@
 **/
 
 	// default settings
-	define( 'ROOT', dirname( __FILE__ ) .DIRECTORY_SEPARATOR );
+	define( 'ROOT', dirname( __FILE__ ) .DIRECTORY_SEPARATOR. '..'. DIRECTORY_SEPARATOR );
 
 	// project settings
 	define( 'BP_ROOT', ROOT .'..' .DIRECTORY_SEPARATOR . 'src' .DIRECTORY_SEPARATOR );

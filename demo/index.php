@@ -10,8 +10,8 @@
 **/
 
 
-	require_once( 'settings.php' );
-	require_once( 'urls.php' );
+	require_once( 'core/settings.php' );
+	require_once( 'core/urls.php' );
 
 	require_once( BP_ROOT. 'url/controller.php' );
 
