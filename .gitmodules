@@ -4,3 +4,15 @@
 [submodule "demo/ui/responsive.css"]
 	path = demo/ui/responsive.css
 	url = https://github.com/tr4n2uil/responsive.css
+[submodule "lib/hybridauth"]
+	path = lib/hybridauth
+	url = https://github.com/hybridauth/hybridauth
+[submodule "lib/php-finediff"]
+	path = lib/php-finediff
+	url = https://github.com/gorhill/PHP-FineDiff
+[submodule "lib/jade-php"]
+	path = lib/jade-php
+	url = https://github.com/ronan-gloo/jade-php
+[submodule "lib/htmlawed"]
+	path = lib/htmlawed
+	url = https://github.com/GerHobbelt/HTMLawed
