@@ -1,15 +1,3 @@
-[submodule "lib/jade-php"]
-	path = lib/jade-php
-	url = git@github.com:ronan-gloo/jade-php.git
-[submodule "lib/php-finediff"]
-	path = lib/php-finediff
-	url = https://github.com/gorhill/PHP-FineDiff
-[submodule "lib/htmlawed"]
-	path = lib/htmlawed
-	url = git@github.com:GerHobbelt/HTMLawed.git
-[submodule "lib/hybridauth"]
-	path = lib/hybridauth
-	url = git@github.com:hybridauth/hybridauth.git
 [submodule "demo/ui/advanced.js"]
 	path = demo/ui/advanced.js
 	url = https://github.com/tr4n2uil/advanced.js
