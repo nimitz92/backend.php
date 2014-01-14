@@ -11,6 +11,8 @@ git init
 git submodule add http://github.com/tr4n2uil/backend.php.git lib/backend.php
 git submodule update --init --recursive
 
+echo "cache/*.php" > .gitignore
+
 mkdir apps
 touch apps/models.php
 
@@ -28,6 +30,7 @@ mkdir ui
 mkdir ui/style
 cp lib/backend.php/demo/ui/style/* ui/style
 mkdir ui/script
+cp lib/backend.php/demo/ui/script/* ui/script
 mkdir ui/image
 
 cp lib/backend.php/demo/.htaccess-final .htaccess
