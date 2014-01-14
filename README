@@ -1,12 +1,23 @@
 backend.php
-	PHP Smart Web Framework
+PHP Smart Web Framework
 
 Vibhaj Rajan <vibhaj8@gmail.com>
-	2013 iospace labs
+2013 PHP labs
 
 
 Licensed under The MIT License 
-	http://www.opensource.org/licenses/mit-license.php
+http://www.opensource.org/licenses/mit-license.php
+
+
+GET STARTED
+start-project.sh /path/to/project
+
+Basic configurations in core/settings.php
+	DEBUG	debug flag
+	HOST	scheme://domain
+	APP		server path to project
+	HOME	default view
+
 
 REQUIREMENTS
 	-php 5.0+
