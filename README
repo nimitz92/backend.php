@@ -14,7 +14,6 @@ start-project.sh /path/to/project
 
 Basic configurations in core/settings.php
 	DEBUG	debug flag
-	HOST	scheme://domain
 	APP		server path to project
 	HOME	default view
 
