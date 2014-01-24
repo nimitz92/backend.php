@@ -37,13 +37,13 @@
 	$DATABASES = array(
 		'default' => array( 
 			'dsn' => 'mysql:host=localhost;port=3306;dbname=backend_php',
-			'user' => 'root',
-			'pass' => 'krishna',
+			'user' => getenv( 'DB_USER' ) ? getenv( 'DB_USER' ) : 'root',
+			'pass' => getenv( 'DB_PASSWD' ) ? getenv( 'DB_PASSWD' ) : 'krishna',
 		),
 		'socket' => array(
 			'dsn' => 'mysql:unix_socket=/tmp/mysql.sock;dbname=backend_php',
-			'user' => 'root',
-			'pass' => 'krishna',
+			'user' => getenv( 'DB_USER' ) ? getenv( 'DB_USER' ) : 'root',
+			'pass' => getenv( 'DB_PASSWD' ) ? getenv( 'DB_PASSWD' ) : 'krishna',
 		),
 	);
 	
