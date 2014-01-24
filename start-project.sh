@@ -36,4 +36,4 @@ mkdir ui/image
 cp lib/backend.php/demo/.htaccess-final .htaccess
 cp lib/backend.php/demo/index.php index.php
 cp lib/backend.php/demo/build-styles.sh build-styles.sh
-
+cp lib/backend.php/demo/backend.sql project.sql
