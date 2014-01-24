@@ -25,7 +25,7 @@
 	// auth utility settings
 	define( 'COOKIE_NAME', 'sessionid' );
 	define( 'COOKIE_EXPIRY', 15 );
-	define( 'COOKIE_DOMAIN', '127.0.0.1' );
+	define( 'COOKIE_DOMAIN', $_SERVER[ 'HTTP_HOST' ] );
 	define( 'COOKIE_PATH', '/' );
 	define( 'COOKIE_SECURE', false );
 	define( 'COOKIE_HTTPONLY', true );
