@@ -18,7 +18,7 @@
 
 	// url utility settings
 	define( 'HOST', ( $_SERVER[ 'SERVER_PORT' ] == 80 ? 'http' : 'https' ). '://'. $_SERVER[ 'HTTP_HOST' ] );
-	define( 'APP', $_SERVER[ 'HTTP_HOST' ] == '127.0.0.1' ? '/bitbucket/backend.php/demo' : '/' );
+	define( 'APP', $_SERVER[ 'HTTP_HOST' ] == '127.0.0.1' ? '/bitbucket/backend.php/demo/' : '/' );
 	define( 'HOME', 'home' );
 	define( 'CACHE_DIR', ROOT. 'cache/' );
 
