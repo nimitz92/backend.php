@@ -25,6 +25,7 @@ cp lib/backend.php/demo/core/urls.php core/urls.php
 
 mkdir tpl
 cp lib/backend.php/demo/tpl/*.jade tpl
+cp lib/backend.php/demo/tpl/login.php tpl/login.php
 
 mkdir ui
 mkdir ui/style
