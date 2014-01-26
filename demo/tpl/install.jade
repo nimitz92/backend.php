@@ -1,0 +1,53 @@
+extends layout
+
+block php
+	:php
+		$path = ROOT."/core/conf.ini";
+		$ini = parse_ini_file($path,true);
+		if( isset( $_POST[ 'install' ]) && $_POST[ 'install' ] == 'Submit'){
+			$conf = array();
+			foreach($ini as $key => $value){
+				if(is_array($value)){
+					$sub_conf = array();
+					foreach($value as $subkey => $subvalue){
+						$sub_conf[$subkey] = $_POST[$subkey];
+					}
+					
+					$conf[$key] = $sub_conf;
+				}
+				else{
+					$conf[$key] = $_POST[$key];
+				}
+			}
+			
+			$content = "";
+			foreach ($conf as $key=>$elem) { 
+				$content .= "[".$key."]\n"; 
+				foreach ($elem as $key2=>$elem2) { 
+					$content .= $key2." = \"".$elem2."\"\n"; 
+				} 
+			}
+			
+			$handle = fopen($path, 'w');
+			fwrite($handle, $content);
+			fclose($handle);
+			
+			echo "Settings saved Successfully";
+			exit;
+			
+		}
+		
+		
+block content
+	form( action = "", method = 'POST' )
+		-foreach($ini as $key => $value)
+			-if(is_array($value))
+				-foreach($value as $sub_key => $sub_value)
+					p
+						span  #{sub_key} = 
+						input( type = "text", value = '#{sub_value}', name = '#{sub_key}')	
+	
+		
+		input( type = "submit", name = 'install', value = 'Submit')
+		
+		
