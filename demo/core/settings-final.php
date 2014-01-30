@@ -8,42 +8,50 @@
  *	http://www.opensource.org/licenses/mit-license.php
  *
 **/
-
+	
 	// default settings
 	define( 'ROOT', dirname( __FILE__ ) .'/../' );
 
 	// project settings
 	define( 'BP_ROOT', ROOT .'lib/backend.php/src/' );
 	define( 'DEBUG', false );
-
+	
+	//load config file
+	define( 'CONF_INI', getenv( 'CONF_INI' ) ? getenv( 'CONF_INI' ) : "default" );
+	$ini = parse_ini_file( CONF_INI.'.conf.ini', true);
+	
 	// url utility settings
-	define( 'HOST', ( $_SERVER[ 'SERVER_PORT' ] == 80 ? 'http' : 'https' ). '://'. $_SERVER[ 'HTTP_HOST' ] );
-	define( 'APP', $_SERVER[ 'HTTP_HOST' ] == '127.0.0.1' ? '/bitbucket/backend.php/demo/' : '/' );
 	define( 'HOME', 'home' );
 	define( 'CACHE_DIR', ROOT. 'cache/' );
+	define( 'HOST', $ini['URL_UTILITY_SETTINGS']['HOST']);
+	define( 'APP', $_SERVER[ 'HTTP_HOST' ] == '127.0.0.1' ? $ini['URL_UTILITY_SETTINGS']['APP_LOCAL'] : $ini['URL_UTILITY_SETTINGS']['APP'] );
+	
 
 	// auth utility settings
-	define( 'COOKIE_NAME', 'sessionid' );
-	define( 'COOKIE_EXPIRY', 15 );
-	define( 'COOKIE_DOMAIN', $_SERVER[ 'HTTP_HOST' ] );
-	define( 'COOKIE_PATH', '/' );
-	define( 'COOKIE_SECURE', false );
-	define( 'COOKIE_HTTPONLY', true );
+	define( 'COOKIE_DOMAIN', $_SERVER['HTTP_HOST'] );
+	foreach($ini['AUTH_UTILITY_SETTINGS'] as $key => $value ){
+		define( $key, $value);
+	}
+	
 	define( 'LOGIN_URL', APP. 'login/' );
 	define( 'LOGIN_REDIRECT', APP );
 	define( 'LOGOUT_REDIRECT', APP );
 
 	// db utility settings
+	foreach($ini['DB_UTILITY_SETTINGS'] as $key => $value ){
+		define( $key, $value);
+	}
+	
 	$DATABASES = array(
 		'default' => array( 
-			'dsn' => 'mysql:host=localhost;port=3306;dbname=backend_php',
-			'user' => getenv( 'DB_USER' ) ? getenv( 'DB_USER' ) : 'root',
-			'pass' => getenv( 'DB_PASSWD' ) ? getenv( 'DB_PASSWD' ) : 'krishna',
+			'dsn' => 'mysql:host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_NAME,
+			'user' => DB_USER,
+			'pass' => DB_PASS,
 		),
 		'socket' => array(
-			'dsn' => 'mysql:unix_socket=/tmp/mysql.sock;dbname=backend_php',
-			'user' => getenv( 'DB_USER' ) ? getenv( 'DB_USER' ) : 'root',
-			'pass' => getenv( 'DB_PASSWD' ) ? getenv( 'DB_PASSWD' ) : 'krishna',
+			'dsn' => 'mysql:unix_socket=/tmp/mysql.sock;dbname='.DB_NAME,
+			'user' => DB_USER,
+			'pass' => DB_PASS,
 		),
 	);
 	

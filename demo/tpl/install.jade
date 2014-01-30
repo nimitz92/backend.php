@@ -26,7 +26,8 @@ block php
 				$content .= "[".$key."]\n"; 
 				foreach ($elem as $key2=>$elem2) { 
 					$content .= $key2." = \"".$elem2."\"\n"; 
-				} 
+				}
+				$content .= "\n";
 			}
 			if(isset($_POST['delete']))
 				rename(ROOT."/tpl/install.jade",ROOT."/tpl/install.jade.done");

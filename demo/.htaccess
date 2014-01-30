@@ -16,6 +16,8 @@ RewriteRule ^(.*)ui/frontend\.(css|js)/(.*)\.(css|js)$ lib/backend\.php/lib/fron
 #	allow css js img
 RewriteCond %{REQUEST_URI} !^.*\.(jpg|css|js|gif|png)$ [NC]
 
+#	allow installer
+RewriteCond %{REQUEST_URI} !^.*install.php$ [NC]
+
 # 	forward everything to index.php
 RewriteRule ^(.*)$ index.php [L]
-
