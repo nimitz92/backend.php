@@ -8,9 +8,8 @@
  *	http://www.opensource.org/licenses/mit-license.php
  *
 **/
-	//load config file
-	$ini = parse_ini_file("conf.ini",true);
-	//print_r($ini);
+	
+	
 	
 	// default settings
 	define( 'ROOT', dirname( __FILE__ ) .'/../' );
@@ -18,7 +17,13 @@
 	// project settings
 	define( 'BP_ROOT', ROOT .'lib/backend.php/src/' );
 	define( 'DEBUG', false );
-
+	
+	//load config file
+	$conf = getenv( 'CONF_INI' ) ? getenv( 'CONF_INI' ) : "default";
+	echo getenv('CONF_INI');
+	define('CONF_INI', $conf);
+	$ini = parse_ini_file( CONF_INI.'.conf.ini', true);
+	
 	// url utility settings
 	define( 'HOME', 'home' );
 	define( 'CACHE_DIR', ROOT. 'cache/' );

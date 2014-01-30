@@ -9,6 +9,7 @@
 //	HybridAuth Config file: http://hybridauth.sourceforge.net/userguide/Configuration.html
 // ----------------------------------------------------------------------------------------
 
+$config = parse_ini_file( ROOT."/core/".CONF_INI.".conf.ini", true);
 return 
 	array(
 		"base_url" => HOST. APP. 'auth/', 
@@ -20,48 +21,48 @@ return
 			),
 
 			"yahoo" => array ( 
-				"enabled" => false,
-				"keys"    => array ( "id" => "", "secret" => "" ),
+				"enabled" => $config['HYBRIDAUTH_SETTINGS']['YAHOO'],
+				"keys"    => array ( "id" => $config['HYBRIDAUTH_SETTINGS']['YAHOO_ID'], "secret" => $config['HYBRIDAUTH_SETTINGS']['YAHOO_SECRET'] ),
 			),
 
 			"aol"  => array ( 
-				"enabled" => false 
+				"enabled" => $config['HYBRIDAUTH_SETTINGS']['AOL'] 
 			),
 
 			"google" => array ( 
-				"enabled" => true,
-				"keys"    => array ( "id" => "453516979674-h6ivs7jmt6t4cmttj5khhnpou0db9le8.apps.googleusercontent.com", "secret" => "wlzYoc8SZmI16XuMXQtfpkzk" )
+				"enabled" => $config['HYBRIDAUTH_SETTINGS']['GOOGLE'],
+				"keys"    => array ( "id" => $config['HYBRIDAUTH_SETTINGS']['GOOGLE_ID'], "secret" => $config['HYBRIDAUTH_SETTINGS']['GOOGLE_SECRET'] )
 			),
 
 			"facebook" => array ( 
-				"enabled" => false,
-				"keys"    => array ( "id" => "", "secret" => "" ), 
+				"enabled" => $config['HYBRIDAUTH_SETTINGS']['FACEBOOK'],
+				"keys"    => array ( "id" => $config['HYBRIDAUTH_SETTINGS']['FACEBOOK_ID'], "secret" => $config['HYBRIDAUTH_SETTINGS']['FACEBOOK_SECRET'] ), 
 			),
 
 			"twitter" => array ( 
-				"enabled" => false,
-				"keys"    => array ( "key" => "", "secret" => "" ) 
+				"enabled" => $config['HYBRIDAUTH_SETTINGS']['TWITTER'],
+				"keys"    => array ( "key" => $config['HYBRIDAUTH_SETTINGS']['TWITTER_ID'], "secret" => $config['HYBRIDAUTH_SETTINGS']['TWITTER_SECRET'] ) 
 			),
 
 			// windows live
 			"live" => array ( 
-				"enabled" => false,
-				"keys"    => array ( "id" => "", "secret" => "" ) 
+				"enabled" => $config['HYBRIDAUTH_SETTINGS']['LIVE'],
+				"keys"    => array ( "id" => $config['HYBRIDAUTH_SETTINGS']['LIVE_ID'], "secret" => $config['HYBRIDAUTH_SETTINGS']['LIVE_SECRET'] ) 
 			),
 
 			"myspace" => array ( 
-				"enabled" => false,
-				"keys"    => array ( "key" => "", "secret" => "" ) 
+				"enabled" => $config['HYBRIDAUTH_SETTINGS']['MYSPACE'],
+				"keys"    => array ( "key" => $config['HYBRIDAUTH_SETTINGS']['MYSPACE_ID'], "secret" => $config['HYBRIDAUTH_SETTINGS']['MYSPACE_SECRET'] ) 
 			),
 
 			"linkedin" => array ( 
-				"enabled" => false,
-				"keys"    => array ( "key" => "", "secret" => "" ) 
+				"enabled" => $config['HYBRIDAUTH_SETTINGS']['LINKEDIN'],
+				"keys"    => array ( "key" => $config['HYBRIDAUTH_SETTINGS']['LINKEDIN_ID'], "secret" => $config['HYBRIDAUTH_SETTINGS']['LINKEDIN_SECRET'] ) 
 			),
 
 			"foursquare" => array (
-				"enabled" => false,
-				"keys"    => array ( "id" => "", "secret" => "" ) 
+				"enabled" => $config['HYBRIDAUTH_SETTINGS']['FOURSQUARE'],
+				"keys"    => array ( "id" => $config['HYBRIDAUTH_SETTINGS']['FOURSQUARE_ID'], "secret" => $config['HYBRIDAUTH_SETTINGS']['FOURSQUARE_SECRET'] ) 
 			),
 		),
 
