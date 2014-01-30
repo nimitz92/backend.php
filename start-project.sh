@@ -22,6 +22,7 @@ mkdir core
 cp lib/backend.php/demo/core/hybridauth_config.php core/hybridauth_config.php
 cp lib/backend.php/demo/core/settings-final.php core/settings.php
 cp lib/backend.php/demo/core/urls.php core/urls.php
+cp lib/backend.php/demo/core/default.conf.ini core/default.conf.ini
 
 mkdir tpl
 cp lib/backend.php/demo/tpl/*.jade tpl
