@@ -11,7 +11,7 @@ RewriteEngine on
 
 #	handle submodule frontend code
 RewriteCond %{REQUEST_URI} ^.*ui/frontend\.(css|js)/.*\.(css|js)$ [NC]
-RewriteRule ^(.*)ui/frontend\.(css|js)/(.*)\.(css|js)$ ../lib/frontend\.$2/$3\.$4 [L]
+RewriteRule ^(.*)ui/frontend\.(css|js)/(.*)\.(css|js)$ lib/backend\.php/lib/frontend\.$2/$3\.$4 [L]
 
 #	allow css js img
 RewriteCond %{REQUEST_URI} !^.*\.(jpg|css|js|gif|png)$ [NC]
