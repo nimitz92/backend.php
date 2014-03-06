@@ -1,0 +1,69 @@
+extends layout
+block php
+	:php
+		require_once( ROOT. 'apps/models.php' );
+		require_once( BP_ROOT. 'util.php' );
+		if( isset( $_POST[ 'table' ]) && $_POST[ 'table' ] == 'Submit'){
+			$name = $_POST['name'];
+			$pk = $_POST['pk'];
+			
+			$table = new Table();
+			
+			$table->set('name', $name);
+			$table->set('pk', $pk);
+			
+			$table->save();
+			
+			echo 'Table Created Successfully';
+			exit;
+		}
+		else if( isset( $_POST[ 'table' ]) && $_POST[ 'table' ] == 'Change'){
+			$name = $_POST['name'];
+			$pk = $_POST['pk'];
+			$new_name = $_POST['new_name'];
+			$new_pk = $_POST['new_pk'];
+			
+			$table = unique_object( 'Table',array( 'name' => $name ) );
+			$table->set('name', $new_name);
+			$table->set('pk', $new_pk);
+			
+			$table->save();
+			
+			echo 'Table Modified Successfully';
+			exit;
+		}
+		else if( isset( $_POST[ 'table' ]) && $_POST[ 'table' ] == 'Delete'){
+			$name = $_POST['name'];
+			
+			$table = unique_object( 'Table',array( 'name' => $name ) );
+			if(!$table){
+				echo "Table not found";
+				exit;
+			}
+			$table->delete();
+			echo 'Table Deleted Successfully';
+			exit;
+		}
+		
+block title
+	title= "Table Manager"
+	
+block content
+	div.body
+		h1 = "Table Manager Schema"
+		form(action = '', method = 'POST')
+			p
+				span Table Name : 
+				input(type = 'text', name = 'name')
+			p
+				span Primary Key :
+				input(type = 'text', value = 'id', name = 'pk')
+			p
+				span New Table Name :
+				input(type = 'text', name = 'new_name')
+			p
+				span New Primary Key :
+				input(type = 'text', name = 'new_pk')
+			input( type = "submit", name = 'table', value = 'Submit')
+			input( type = "submit", name = 'table', value = 'Change')
+			input( type = "submit", name = 'table', value = 'Delete')

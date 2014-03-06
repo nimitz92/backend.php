@@ -1,0 +1,30 @@
+extends layout
+
+block php
+	:php
+		global $URL_ARGS;
+		global $SM;
+
+		require_once( BP_ROOT. 'auth/session.php' );
+		require_once( ROOT. 'apps/models.php' );
+
+		$u = $SM->user_get(); 
+
+		if( $u ){
+			$json = json_encode( $u->obj_serialize() );
+		}
+
+block title
+	title= "Backend.php in Jade"
+
+block content
+	div.body
+		div.loading( ng-show="loader" )
+			img( src="#{app}ui/img/loader.gif" )
+
+		div( ng-view )
+
+	-if( $u )
+		script.
+			SessionUser = !{json};
+
